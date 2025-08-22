@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<head>
+    <title>📝 แก้ไขข่าว</title>
+    <link rel="stylesheet" href="{% static 'css/admin_news.css' %}">
+</head>
+
+<body>
+<div class="news-edit-container">
+    <h2 class="news-edit-title">📝 แก้ไขข่าว</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="news-edit-form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="title" class="form-label">หัวข้อข่าว:</label>
+            <input type="text" name="title" id="title" class="form-input" value="{{ news.title }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="content" class="form-label">เนื้อหาข่าว:</label>
+            <textarea name="content" id="content" class="form-textarea" required>{{ news.content }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="image" class="form-label">รูปภาพข่าว (เปลี่ยนรูปใหม่):</label>
+            <input type="file" name="image" id="image" class="form-file">
+        </div>
+
+        <div class="button-container">
+            <button type="submit" class="btn btn-submit">💾 บันทึกการเปลี่ยนแปลง</button>
+            <a href="{% url 'admin_manage_news' %}" class="btn btn-cancel">❌ ยกเลิก</a>
+        </div>
+    </form>
+</div>
+</body>
+{% endblock %}

@@ -1,0 +1,30 @@
+/* lease.css */
+.container {
+    max-width: 500px; /* ลดความกว้างของคอนเทนเนอร์ */
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+img {
+    width: 80%; /* ลดขนาดรูปภาพเหลือ 80% ของ container */
+    max-width: 600px; /* จำกัดขนาดใหญ่สุดของรูป */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+p {
+    font-size: 18px;
+    color: #777;
+}
+

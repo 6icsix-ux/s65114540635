@@ -1,0 +1,30 @@
+{% extends 'baseuser.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+<div class="container">
+    <div class="profile-card">
+        <!-- ✅ แสดงรูปโปรไฟล์ -->
+        {% if member.profile_picture %}
+            <img src="{{ member.profile_picture.url }}" alt="โปรไฟล์" class="img-profile">
+        {% else %}
+            <img src="{% static 'images/default_profile.png' %}" alt="ไม่มีรูปโปรไฟล์" class="img-profile">
+        {% endif %}
+
+        <!-- ✅ ข้อมูลโปรไฟล์ -->
+        <h2>{{ member.fullname }}</h2>
+        <p><strong>Email</strong> {{ member.email }}</p>
+        <p><strong>Phone</strong> {{ member.phone|default:"-" }}</p>
+        <p><strong>Address</strong> {{ member.address|default:"-" }}</p>
+        <p><strong>Sex</strong> {{ member.sex|default:"-" }}</p>
+        <p><strong>Birthday</strong> {{ member.birthday|default:"-" }}</p>
+
+        <!-- ✅ ปุ่มแก้ไข และ ย้อนกลับ -->
+        <div class="profile-buttons">
+            <a href="{% url 'edit_profile' %}" class="btn btn-edit">🛠 แก้ไขข้อมูล</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

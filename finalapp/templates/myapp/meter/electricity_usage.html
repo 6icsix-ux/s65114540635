@@ -1,0 +1,39 @@
+{% extends 'baseuser.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<head>
+    <title>📊 เลขมิเตอร์ไฟฟ้าของห้อง {{ user_room }}</title>
+    <link rel="stylesheet" href="{% static 'css/electricity_usage.css' %}">
+</head>
+<body>
+    <div class="electricity-usage-container">
+        <h2>⚡ เลขมิเตอร์ของห้อง {% if user_room %} {{ user_room }} {% else %} - {% endif %}</h2>
+
+        {% if room_not_found %}
+            <p style="color: red; text-align: center;">⚠️ คุณยังไม่มีห้องพักที่ลงทะเบียน ⚠️</p>
+        {% elif electricity_usages %}
+            <table class="electricity-usage-table">
+                <thead>
+                    <tr>
+                        <th>📅 เดือน</th>
+                        <th>🔌 ปริมาณการใช้ไฟ (หน่วย)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usage in electricity_usages %}
+                    <tr>
+                        <td>{{ usage.month_year }}</td>
+                        <td>{{ usage.consumption|default:0|floatformat:0|intcomma }} หน่วย</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p style="color: red; text-align: center;">⚠️ ไม่มีข้อมูลการใช้ไฟฟ้า ⚠️</p>
+        {% endif %}
+    </div>
+</body>
+
+{% endblock %}

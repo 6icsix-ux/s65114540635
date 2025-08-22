@@ -1,0 +1,47 @@
+/* พื้นหลัง */
+body {
+    background: #f4f4f9;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    padding: 0px;
+}
+
+/* กล่องข้อความกลางจอ */
+.complaint-success-container {
+    background: white;
+    padding: 30px;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* หัวข้อ */
+h2 {
+    color: #28a745; /* สีเขียว */
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* ข้อความขอบคุณ */
+p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* ปุ่มกลับสู่หน้าแรก */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #0056b3;
+}

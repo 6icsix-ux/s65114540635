@@ -1,0 +1,135 @@
+/* ✅ Container หลัก */
+.profile-container {
+    width: 90%;
+    max-width: 700px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    text-align: center;
+}
+
+/* ✅ หัวข้อ */
+.profile-container h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* ✅ รูปโปรไฟล์ */
+.profile-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-img-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* ✅ กรอบข้อมูล */
+.form-row {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    width: 50%;
+    text-align: center;
+}
+
+/* ✅ ป้าย Label */
+.form-group label {
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* ✅ ช่องป้อนข้อมูล */
+.profile-form input,
+.profile-form select,
+.profile-form textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+/* ✅ ปุ่ม */
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* ✅ ปุ่มหลัก */
+.btn {
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 140px;
+    justify-content: center;
+}
+
+/* ✅ ปุ่มบันทึก */
+.btn-save {
+    background-color: #28a745;
+    color: white;
+    border: 2px solid #218838;
+}
+
+.btn-save:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+/* ✅ ปุ่มยกเลิก */
+.btn-back {
+    background-color: #dc3545;
+    color: white;
+    border: 2px solid #c82333;
+}
+
+.btn-back:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* ✅ ปรับให้เข้ากับหน้าจอเล็ก */
+@media screen and (max-width: 768px) {
+    .profile-container {
+        padding: 15px;
+    }
+
+    .profile-img-preview {
+        width: 100px;
+        height: 100px;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+}

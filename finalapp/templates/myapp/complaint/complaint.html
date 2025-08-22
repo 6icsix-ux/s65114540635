@@ -1,0 +1,33 @@
+{% extends 'baseuser.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <title>แบบฟอร์มร้องเรียน</title>
+    <link rel="stylesheet" href="{% static 'css/complaint.css' %}">
+</head>
+<body>
+    <div class="complaint-container">
+        <h2>📢 แบบฟอร์มร้องเรียน</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <!-- ✅ แสดงห้องเป็นข้อความ -->
+            <div class="room-display">
+                <p>🏠 ห้อง {{ room.room_number }}</p>
+                <input type="hidden" name="room" value="{{ room.id }}">
+            </div>
+
+            <!-- ✅ รายละเอียดร้องเรียน -->
+            <label for="description">✍️ รายละเอียด:</label>
+            <textarea name="description" id="description" placeholder="กรอกรายละเอียดร้องเรียน" required></textarea>
+
+            <div class="button-container">
+                <button type="submit" class="btn btn-submit">🚀 ส่งเรื่องร้องเรียน</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

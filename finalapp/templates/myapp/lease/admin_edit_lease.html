@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <!-- เชื่อมโยงกับไฟล์ CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin_edit_lease.css' %}">
+</head>
+
+    <div class="lease-container">
+        <h2 class="lease-title">แก้ไขสัญญาเช่า</h2>
+        <form method="post" enctype="multipart/form-data" class="lease-form">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-submit">บันทึกการเปลี่ยนแปลง</button>
+        </form>
+    </div>
+{% endblock %}

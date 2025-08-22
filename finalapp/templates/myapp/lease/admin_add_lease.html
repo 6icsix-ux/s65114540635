@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/admin_add_lease.css' %}">
+<div class="form-container">
+    <h2>เพิ่มสัญญาเช่า</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="file">อัปโหลดไฟล์สัญญา</label>
+        {{ form.file }}
+        <button type="submit" class="btn-submit">บันทึก</button>
+    </form>
+</div>
+{% endblock %}

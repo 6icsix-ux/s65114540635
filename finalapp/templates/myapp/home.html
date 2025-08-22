@@ -1,0 +1,52 @@
+{% extends 'baseuser.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<div class="container">
+    <h2>🏡 ห้องของคุณ</h2>
+    {% if room %}
+    <div class="room-container">
+        <h3>ห้องของคุณ <span class="room-number">{{ room.room_number }}</span></h3>
+        {% if room.image %}
+            <img src="{{ room.image.url }}" alt="ห้องของคุณ" class="room-image">
+        {% else %}
+            <img src="{% static 'images/default_room.png' %}" alt="ไม่มีภาพห้อง" class="room-image">
+        {% endif %}
+        <div class="room-details">
+            <p>📌 <strong>ประเภทห้อง </strong> {{ room.room_type }}</p>
+            <p>💰 <strong>ค่าเช่า </strong> {{ room.rent_price|floatformat:0|intcomma }} บาท/เดือน</p>
+            <p>⚡ <strong>ค่าไฟ </strong> {{ room.electricity_price|floatformat:0 }} บาท/หน่วย</p>
+            <p>💧 <strong>ค่าน้ำ </strong> {{ room.water_price|floatformat:0 }} บาท/หน่วย</p>
+        </div>
+        <div class="modal-amenities">
+  <strong>สิ่งอำนวยความสะดวก </strong>
+  <div class="amenity-badges">
+    {% for facility in room.get_facilities_list %}
+      <span class="amenity-badge">
+        {% if facility == "bed" %}🛏 เตียง
+        {% elif facility == "wifi" %}📶 Wi-Fi
+        {% elif facility == "water_heater" %}🚿 เครื่องทำน้ำอุ่น
+        {% elif facility == "parking" %}🅿️ ที่จอดรถ
+        {% elif facility == "kettle" %}☕ กาน้ำร้อน
+        {% elif facility == "kitchen" %}🍳 ครัว/ไมโครเวฟ
+        {% elif facility == "balcony" %}🌅 ระเบียง
+        {% elif facility == "no_smoking" %}🚭 ห้ามสูบบุหรี่
+        {% elif facility == "smoking_area" %}🚬 สูบบุหรี่ (ภายนอก)
+        {% elif facility == "pet_allowed" %}🐶🐱 สัตว์เลี้ยงเข้าได้
+        {% elif facility == "fridge" %}🧊 ตู้เย็น
+        {% else %}{{ facility }}
+        {% endif %}
+      </span>
+    {% empty %}
+      <span class="amenity-badge">- ไม่มีข้อมูล -</span>
+    {% endfor %}
+  </div>
+</div>
+
+    </div>
+    {% else %}
+    <p class="no-room">❌ คุณยังไม่มีห้องพักในระบบ กรุณาติดต่อแอดมิน</p>
+    {% endif %}
+</div>
+{% endblock %}

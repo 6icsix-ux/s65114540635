@@ -1,0 +1,46 @@
+{% extends 'baseuser.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ข่าวประชาสัมพันธ์</title>
+    <link rel="stylesheet" href="{% static 'css/view_news.css' %}">
+</head>
+<body>
+    <div class="news-container">
+        <h2>📰 ข่าวประชาสัมพันธ์</h2>
+        <!-- ✅ แสดงแจ้งเตือนข่าว -->
+        <!--<div class="notification-section">
+            <h3>🔔 ข่าวล่าสุด</h3>
+            <ul>
+                {% for notification in notifications %}
+                    <li class="{% if not notification.is_read %}unread{% endif %}">
+                        {{ notification.message }} <small>({{ notification.created_at }})</small>
+                    </li>
+                {% empty %}
+                    <li>ไม่มีข่าวประชาสัมพันธ์ใหม่</li>
+                {% endfor %}
+            </ul>
+        </div>-->
+
+        <!-- ✅ แสดงรายการข่าว -->
+        {% for news in news_list %}
+        <div class="news-card">
+            {% if news.image %}
+                <img src="{{ news.image.url }}" alt="News Image">
+            {% endif %}
+            <h3>{{ news.title }}</h3>
+            <p>{{ news.content }}</p>
+            <small>📅 {{ news.created_at }}</small>
+        </div>
+        {% empty %}
+            <p>ไม่มีข่าวประชาสัมพันธ์</p>
+        {% endfor %}
+        <!-- ✅ ปุ่มย้อนกลับ -->
+    </div>
+</body>
+</html>
+{% endblock %}

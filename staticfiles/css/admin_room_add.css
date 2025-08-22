@@ -1,0 +1,117 @@
+/* ✅ ส่วน container หลัก */
+.admin-room-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ หัวข้อ */
+.admin-room-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* ✅ ช่องกรอก input และ select */
+.input-field,
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* ✅ ส่วน textarea */
+textarea {
+    min-height: 120px;
+}
+
+/* ✅ ปุ่ม */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* ✅ ปุ่มหลัก */
+.add-room-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-room-btn:hover {
+    background-color: #0056b3;
+}
+
+/* ✅ ปุ่มยกเลิก */
+.cancel-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cancel-btn:hover {
+    background-color: #b02a37;
+}
+
+/* ✅ ส่วนหัวข้อย่อย (สิ่งอำนวยความสะดวก) */
+h3 {
+    font-size: 22px;
+    color: #444;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+/* ✅ กล่องหุ้ม checkbox ทั้งหมด */
+.facility-checkbox-wrapper {
+    margin-top: 10px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+/* ✅ กริด checkbox 3 ช่อง */
+.facility-checkbox {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 ช่อง */
+    gap: 16px 20px;
+    justify-items: start; /* ชิดซ้าย */
+}
+
+/* ✅ รูปแบบแต่ละ checkbox */
+.facility-checkbox label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    gap: 6px;
+    cursor: pointer;
+}
+
+/* ✅ ปรับขนาด checkbox */
+.facility-checkbox input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-right: 8px;
+}

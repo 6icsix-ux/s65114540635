@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/admin_add_lease_success.css' %}">
+<div class="success-container">
+    <h2>อัปโหลดสัญญาเช่าเรียบร้อยแล้ว</h2>
+    <p>ระบบได้บันทึกสัญญาของคุณแล้ว</p>
+    <a href="{% url 'admin_manage_leases' %}" class="btn-back">กลับไปดูรายการสัญญาเช่า</a>
+</div>
+{% endblock %}

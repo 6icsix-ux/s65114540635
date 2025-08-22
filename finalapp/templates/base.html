@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Kim Apartment{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Kim Apartment</h1>
+        <div class="user-info">
+            <p>{{user}}</p>
+        </div>
+    </header>
+    <div class="app-container">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="{% url 'admin_home' %}" class="{% if request.path == home_url %}active{% endif %}">
+                    <div class="button-number">1</div>
+                    <span>หน้าแรก</span>
+                </a>
+                <a href="{% url 'admin_user_list' %}" class="{% if request.path == user_url %}active{% endif %}">
+                    <div class="button-number">2</div>
+                    <span>สมาชิก</span>
+                </a>
+                <a href="{% url 'admin_room' %}" class="{% if request.path == room_url %}active{% endif %}">
+                    <div class="button-number">3</div>
+                    <span>ห้องพัก</span>
+                </a>
+                <a href="{% url 'admin_meter_list' %}" class="{% if request.path == meter_url %}active{% endif %}">
+                    <div class="button-number">4</div>
+                    <span>จดเลขมิเตอร์</span>
+                </a>
+                <a href="{% url 'admin-payments' %}" class="{% if request.path == bill_url %}active{% endif %}">
+                    <div class="button-number">5</div>
+                    <span>การชำระเงิน</span>
+                </a>
+                <a href="{% url 'admin_complaint' %}" class="{% if request.path == complaint_url %}active{% endif %}">
+                    <div class="button-number">6</div>
+                    <span>เรื่องร้องเรียน</span>
+                </a>
+                <a href="{% url 'admin_manage_leases' %}" class="{% if request.path == lease_url %}active{% endif %}">
+                    <div class="button-number">7</div>
+                    <span>สัญญาเช่า</span>
+                </a>
+            </nav>
+            <div class="extra-links">
+                <a href="{% url 'admin_manage_news' %}">
+                    <span>ข่าวสาร</span>
+                </a>
+                <a href="{% url 'logout' %}" onclick="return confirmLogout()">
+                    <span>ออกจากระบบ</span>
+                </a>
+                
+            </div>
+        </div>
+        <main>
+            <div class="content-container">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>

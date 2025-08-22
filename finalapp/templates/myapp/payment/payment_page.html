@@ -1,0 +1,113 @@
+{% extends 'baseuser.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<head>
+    <title>แจ้งชำระเงิน</title>
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+</head>
+<body>
+    <div class="payment-container">
+        <h2>💰 แจ้งชำระเงิน</h2>
+
+        <!-- Payment details -->
+        <div class="payment-details">
+            <p>📅 เดือนที่เลือก : <strong>{{ selected_month }}</strong></p>
+            <p>💵 ยอดที่ต้องชำระ : <strong class="amount">{{ total_cost|floatformat:0|intcomma }}</strong> บาท</p>
+        </div>
+
+        <!-- QR Code Section -->
+        <div class="qr-container">
+            <img src="{% static 'images/qrcode.png' %}" alt="QR Code สำหรับชำระเงิน" class="qr-code">
+        </div>
+
+        <!-- สถานะการชำระเงินและการจัดการ -->
+        {% if payment %}
+            {% if payment.status == 'approved' %}
+                <p class="success-message">✅ สถานะการชำระเงิน : <strong>ชำระแล้ว</strong></p>
+                {% if payment.slip %}
+                    <img src="{{ payment.slip.url }}" alt="สลิปการโอนเงิน" class="payment-slip">
+                {% endif %}
+
+            {% elif payment.status == 'rejected' %}
+                <p class="danger-message">❌ สถานะการชำระเงิน : <strong>ไม่อนุมัติ กรุณาอัปโหลดสลิปใหม่</strong></p>
+
+                <!-- ฟอร์มอัปโหลดสลิปใหม่ -->
+                <form method="POST" enctype="multipart/form-data" action="{% url 'payment' %}?month={{ selected_month }}">
+                    {% csrf_token %}
+                    <input type="hidden" name="selected_month" value="{{ selected_month }}">
+
+                    <label>📤 อัปโหลดสลิปการโอนเงิน :</label>
+                    <input type="file" id="slip-upload" name="slip" accept="image/*" required onchange="previewSlip(event)">
+
+                    <div id="slip-preview-container">
+                        <img id="slip-preview" src="#" alt="ตัวอย่างสลิป" style="display: none;">
+                    </div>
+
+                    <div class="button-container">
+                        <button type="submit" class="btn btn-pay">💸 แจ้งชำระเงินใหม่</button>
+                        <a href="{% url 'rent-check' %}" class="btn btn-back">ย้อนกลับ</a>
+                    </div>
+                </form>
+
+            {% elif payment.status == 'pending' %}
+                <p class="warning-message">⚠️ สถานะการชำระเงิน : <strong>รอตรวจสอบ</strong></p>
+
+            {% else %}
+                <p class="warning-message">⚠️ สถานะการชำระเงิน : <strong>ยังไม่ชำระ</strong></p>
+
+                <!-- ฟอร์มอัปโหลดสลิป -->
+                <form method="POST" enctype="multipart/form-data" action="{% url 'payment' %}?month={{ selected_month }}">
+                    {% csrf_token %}
+                    <input type="hidden" name="selected_month" value="{{ selected_month }}">
+
+                    <label>📤 อัปโหลดสลิปการโอนเงิน :</label>
+                    <input type="file" id="slip-upload" name="slip" accept="image/*" required onchange="previewSlip(event)">
+
+                    <div id="slip-preview-container">
+                        <img id="slip-preview" src="#" alt="ตัวอย่างสลิป" style="display: none;">
+                    </div>
+
+                    <div class="button-container">
+                        <button type="submit" class="btn btn-pay">💸 แจ้งชำระเงิน</button>
+                        <a href="{% url 'rent-check' %}" class="btn btn-back">ย้อนกลับ</a>
+                    </div>
+                </form>
+            {% endif %}
+        {% else %}
+            <p class="warning-message">⚠️ สถานะการชำระเงิน : <strong>ยังไม่ชำระ</strong></p>
+
+            <!-- ฟอร์มอัปโหลดสลิป -->
+            <form method="POST" enctype="multipart/form-data" action="{% url 'payment' %}?month={{ selected_month }}">
+                {% csrf_token %}
+                <input type="hidden" name="selected_month" value="{{ selected_month }}">
+
+                <label>📤 อัปโหลดสลิปการโอนเงิน :</label>
+                <input type="file" id="slip-upload" name="slip" accept="image/*" required onchange="previewSlip(event)">
+
+                <div id="slip-preview-container">
+                    <img id="slip-preview" src="#" alt="ตัวอย่างสลิป" style="display: none;">
+                </div>
+
+                <div class="button-container">
+                    <button type="submit" class="btn btn-pay">💸 แจ้งชำระเงิน</button>
+                    <a href="{% url 'rent-check' %}" class="btn btn-back">ย้อนกลับ</a>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+
+    <script>
+        function previewSlip(event) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                const img = document.getElementById("slip-preview");
+                img.src = reader.result;
+                img.style.display = "block";
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>
+{% endblock %}

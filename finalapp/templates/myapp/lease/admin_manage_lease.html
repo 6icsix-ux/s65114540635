@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Admin Leases{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/admin_manage_lease.css' %}">
+
+<h2>สัญญาเช่า</h2>
+
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ชื่อผู้ใช้</th>
+                <th>สถานะสัญญา</th>
+                <th>จัดการ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>{{ member.fullname }}</td>
+                <td>
+                    {% if member.lease %}
+                        <span class="status status-available">มีสัญญา</span>
+                        <a href="{{ member.lease.file.url }}" class="btn btn-edit" target="_blank">ดูสัญญา</a>
+                    {% else %}
+                        <span class="status status-missing">ไม่มีสัญญา</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if member.lease %}
+                        <a href="{% url 'admin_edit_lease' member.lease.id %}" class="btn btn-edit">แก้ไข</a>
+                        <a href="{% url 'admin_delete_lease' member.lease.id %}" class="btn btn-delete" onclick="return confirmDelete()">ลบ</a>
+                    {% else %}
+                        <a href="{% url 'admin_add_lease' member.id %}" class="btn btn-add">เพิ่มสัญญาเช่า</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    function confirmDelete() {
+        return confirm("⚠️ คุณแน่ใจหรือไม่ว่าต้องการลบสัญญาเช่านี้?");
+    }
+</script>
+{% endblock %}

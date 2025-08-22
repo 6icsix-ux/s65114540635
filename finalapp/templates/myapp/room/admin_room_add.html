@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/admin_room_add.css' %}">
+</head>
+
+<div class="admin-room-container">
+    <h2>เพิ่มห้องใหม่</h2>
+
+    <form method="POST" action="{% url 'admin_room_add' %}">
+        {% csrf_token %}
+
+        <input type="text" name="room_number" class="input-field" placeholder="หมายเลขห้อง" required>
+        
+        <select name="room_type" class="input-field" required>
+            <option value="" disabled selected>เลือกประเภทห้อง</option>
+            <option value="Standard">Standard</option>
+            <option value="Deluxe">Deluxe</option>
+        </select>
+
+        <input type="number" name="size" class="input-field" placeholder="ขนาดห้อง (ตร.ม.)" step="0.1" required>
+        <input type="number" name="rent_price" class="input-field" placeholder="ค่าเช่า (บาท/เดือน)" step="0.01">
+        <input type="number" name="electricity_price" class="input-field" placeholder="ค่าไฟ (บาท/หน่วย)" step="0.01">
+        <input type="number" name="water_price" class="input-field" placeholder="ค่าน้ำ (บาท/หน่วย)" step="0.01">
+    
+        <!-- ✅ ส่วนสิ่งอำนวยความสะดวก -->
+        <h3>✨ สิ่งอำนวยความสะดวก & กฎการเข้าพัก</h3>
+
+        <div class="facility-checkbox-wrapper">
+            <div class="facility-checkbox">
+                <label><input type="checkbox" name="facilities" value="bed"> 🛏 เตียง</label>
+                <label><input type="checkbox" name="facilities" value="water_heater"> 🚿 เครื่องทำน้ำอุ่น</label>
+                <label><input type="checkbox" name="facilities" value="wifi"> 📶 Wi-Fi</label>
+                <label><input type="checkbox" name="facilities" value="parking"> 🅿️ ที่จอดรถ</label>
+                <label><input type="checkbox" name="facilities" value="kettle"> ☕ กาน้ำร้อน</label>
+                <label><input type="checkbox" name="facilities" value="kitchen"> 🍳 ครัว/ไมโครเวฟ</label>
+                <label><input type="checkbox" name="facilities" value="balcony"> 🌅 ระเบียง</label>
+                <label><input type="checkbox" name="facilities" value="fridge"> 🧊 ตู้เย็น</label> <!-- ✅ เพิ่มตู้เย็น -->
+                <label><input type="checkbox" name="facilities" value="no_smoking"> 🚭 ห้ามสูบบุหรี่ในห้อง</label>
+                <label><input type="checkbox" name="facilities" value="smoking_area"> 🚬 สูบบุหรี่ได้ (Outdoor)</label>
+                <label><input type="checkbox" name="facilities" value="pet_allowed"> 🐶🐱 อนุญาตสัตว์เลี้ยง</label>
+            </div>
+        </div>
+
+        <!-- ✅ ปุ่ม -->
+        <div class="button-group">
+            <button type="submit" class="btn add-room-btn">บันทึกห้อง</button>
+            <a href="{% url 'admin_room' %}" class="btn cancel-btn">ยกเลิก</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

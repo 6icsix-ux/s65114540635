@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Admin Complaint{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/admin_complaint.css' %}">
+
+<div class="container">
+    <div class="header-container">
+        <h2>📋 คำร้องเรียนทั้งหมด</h2>
+        <div class="filter-container">
+            <label for="statusFilter">แสดงสถานะ</label>
+            <select id="statusFilter" class="status-dropdown">
+                <option value="all">ทั้งหมด</option>
+                <option value="pending">รอดำเนินการ</option>
+                <option value="approved">อนุมัติแล้ว</option>
+                <option value="rejected">ไม่อนุมัติ</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>หมายเลขห้อง</th>
+                    <th>คำร้องเรียน</th>
+                    <th>สถานะ</th>
+                    <th>การดำเนินการ</th>
+                </tr>
+            </thead>
+            <tbody id="complaintTableBody">
+                {% for complaint in complaints %}
+                <tr class="complaint-row" data-status="{{ complaint.status }}">
+                    <td>{{ complaint.room.room_number }}</td>
+                    <td>{{ complaint.description }}</td>
+                    <td>
+                        {% if complaint.status == "pending" %}
+                            <span class="status-pending">รอดำเนินการ</span>
+                        {% elif complaint.status == "approved" %}
+                            <span class="status-approved">✔ อนุมัติแล้ว</span>
+                        {% elif complaint.status == "rejected" %}
+                            <span class="status-rejected">❌ ไม่อนุมัติ</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if complaint.status == "pending" %}
+                        <a href="{% url 'update_complaint_status' complaint.id 'approved' %}" 
+                        class="btn btn-success"
+                        onclick="return confirm('ยืนยันการอนุมัติคำร้องนี้?')">
+                        ✅ อนุมัติ
+                        </a>
+
+                        <a href="{% url 'update_complaint_status' complaint.id 'rejected' %}" 
+                        class="btn btn-danger"
+                        onclick="return confirm('ยืนยันการปฏิเสธคำร้องนี้?')">
+                        ❌ ไม่อนุมัติ
+                        </a>
+
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="no-data">ไม่มีคำร้องเรียน</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ✅ JavaScript กรองสถานะ -->
+<script>
+    document.getElementById("statusFilter").addEventListener("change", function () {
+        let filter = this.value;
+        let rows = document.querySelectorAll(".complaint-row");
+
+        rows.forEach(row => {
+            let status = row.getAttribute("data-status");
+            row.style.display = (filter === "all" || status === filter) ? "" : "none";
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,79 @@
+/* ✅ Container หลัก */
+.notification-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+/* ✅ หัวข้อ */
+.notification-container h2 {
+    font-size: 22px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+/* ✅ รายการแจ้งเตือน */
+.notification-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.notification-item {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ✅ สถานะแจ้งเตือน */
+.unread {
+    font-weight: bold;
+    color: red;
+}
+
+.read {
+    color: gray;
+}
+
+/* ✅ ปุ่ม */
+.button-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.3s ease;
+    display: inline-block;
+}
+
+.btn-mark-read {
+    background: #28a745;
+    color: white;
+}
+
+.btn-mark-read:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}
+
+.btn-back {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-back:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+}

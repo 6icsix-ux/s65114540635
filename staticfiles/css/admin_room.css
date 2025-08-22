@@ -1,0 +1,225 @@
+/* ---- Container หลักของหน้า Manage Rooms ---- */
+.admin-room-container {
+    max-width: 1000px; /* ✅ ขยายให้ใหญ่ขึ้น */
+    margin: 30px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* ---- ฟอร์มเพิ่มห้อง ---- */
+.room-form-container {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ปรับขนาดปุ่มให้เต็มกว้าง */
+.add-room-btn {
+    background: #007bff;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.add-room-btn:hover {
+    background: #0056b3;
+}
+
+/* ---- ปรับตารางให้รองรับ Responsive ---- */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* ✅ ให้เลื่อนได้หากตารางกว้างเกิน */
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+/* ✅ กล่องค้นหา */
+.search-container {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.search-input {
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.search-input:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* ✅ จัดระยะห่างให้ข้อมูลผู้เช่า */
+.tenant-info {
+    text-align: left;
+}
+
+.tenant-name {
+    font-weight: bold;
+}
+
+.tenant-email {
+    font-size: 14px;
+    color: #666;
+}
+
+/* ✅ ป้องกันตารางล้น */
+.table-container {
+    overflow-x: auto;
+}
+
+
+/* ✅ ป้องกันตารางล้น */
+.table-container {
+    overflow-x: auto;
+}
+
+
+/* ปรับตารางให้ไม่เกินขอบ */
+.room-table {
+    width: 100%;
+    min-width: 800px; /* ✅ ป้องกันตารางหดเกินไป */
+    border-collapse: collapse;
+}
+
+.room-table th {
+    background: #007bff;
+    color: white;
+    padding: 12px;
+    text-align: center;
+}
+
+.room-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+/* แถวสลับสี */
+.room-table tr:nth-child(even) {
+    background: #f5f5f5;
+}
+
+/* ---- ปุ่มจัดการผู้เช่าและห้อง ---- */
+.btn {
+    display: inline-block;
+    padding: 8px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    transition: 0.3s;
+    margin: 3px;
+    border: none;
+    cursor: pointer;
+    width: 90px; /* ✅ ปรับให้ทุกปุ่มมีขนาดเท่ากัน */
+}
+
+/* ปุ่มเพิ่มผู้เช่า */
+.add-tenant-btn {
+    background: #4CAF50; /* สีเขียว */
+    color: white;
+}
+
+/* ปุ่มลบผู้เช่า */
+.delete-tenant-btn {
+    background: #f39c12;
+    color: white;
+}
+
+/* ปุ่มลบห้อง */
+.delete-room-btn {
+    background: #f44336;
+    color: white;
+}
+
+/* ปุ่ม hover */
+.btn:hover {
+    opacity: 0.85;
+}
+
+/* Dropdown เลือกผู้เช่า */
+.tenant-select {
+    padding: 8px;
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin: 5px 0;
+    text-align: center;
+}
+
+/* ปิดการใช้งาน Dropdown */
+.tenant-select:disabled {
+    background: #e0e0e0;
+    cursor: not-allowed;
+}
+
+/* จัดกลุ่มปุ่ม Actions */
+.actions-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ข้อความไม่มีผู้เช่า */
+.no-tenant {
+    color: red;
+    font-weight: bold;
+}
+
+/* ข้อความไม่มีห้อง */
+.no-room {
+    text-align: center;
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* ปรับขนาดตัวหนังสือและระยะห่างสำหรับหน้าจอเล็ก */
+@media (max-width: 768px) {
+    .admin-room-container {
+        padding: 15px;
+    }
+    
+    .table-container {
+        padding: 15px;
+    }
+
+    .room-table th, .room-table td {
+        padding: 10px;
+        font-size: 14px; /* ✅ ลดขนาดตัวหนังสือ */
+    }
+
+    .btn {
+        padding: 6px 10px; /* ✅ ลดขนาดปุ่ม */
+        font-size: 12px;
+    }
+
+    .tenant-select {
+        font-size: 12px;
+        padding: 6px;
+    }
+}

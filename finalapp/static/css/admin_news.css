@@ -1,0 +1,69 @@
+.news-edit-container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 25px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.news-edit-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.news-edit-form .form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.form-input,
+.form-textarea,
+.form-file {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-textarea {
+    height: 150px;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-submit {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-submit:hover, .btn-cancel:hover {
+    opacity: 0.9;
+}

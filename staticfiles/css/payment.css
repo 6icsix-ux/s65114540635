@@ -1,0 +1,78 @@
+/* payment.css */
+
+/* ปรับแต่งหน้าหลัก */
+.payment-container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* ปรับแต่งปุ่ม */
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.btn-pay {
+    background-color: #28a745;
+    color: white;
+    margin-right: 10px;
+}
+
+.btn-pay:hover {
+    background-color: #218838;
+}
+
+.btn-back {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-back:hover {
+    background-color: #0056b3;
+}
+
+/* ปรับแต่ง QR Code */
+.qr-container img {
+    width: 100%;
+    max-width: 300px;
+    margin: 15px 0;
+}
+
+/* ปรับแต่ง input file */
+/* ปรับขนาดของ Input File */
+input[type="file"] {
+    display: block;
+    margin: 10px auto;
+    border: 2px dashed #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* ปรับขนาดของ Preview ภาพสลิป */
+#slip-preview-container {
+    margin-top: 10px;
+    text-align: center; /* จัดให้อยู่ตรงกลาง */
+}
+
+#slip-preview {
+    max-width: 100%;  /* ปรับให้รูปไม่เกินขนาด container */
+    max-height: 300px; /* กำหนดความสูงสูงสุด */
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    display: block; /* ทำให้รูปอยู่กึ่งกลาง */
+    margin: auto;
+}
+
+

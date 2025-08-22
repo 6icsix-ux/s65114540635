@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+
+{% block title %}Admin Room{% endblock %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/admin_room.css' %}">
+</head>
+
+<div class="admin-room-container">
+    <h2>รายการห้องพัก</h2>
+
+    <div class="room-form-container">
+        <h3>เพิ่มห้องใหม่</h3>
+        <a href="{% url 'admin_room_add' %}" class="btn add-room-btn">➕ เพิ่มห้อง</a>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 ค้นหา หมายเลขห้อง, ผู้เช่า หรืออีเมล...">
+    </div>
+
+    <div class="table-container">
+        <table class="room-table">
+            <thead>
+                <tr>
+                    <th>หมายเลขห้อง</th>
+                    <th>ประเภทห้อง</th>
+                    <th>ขนาด (ตร.ม.)</th>
+                    <th>ราคา / เดือน</th>
+                    <th>สถานะ</th>
+                    <th>ผู้เช่า</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="roomTableBody">
+                {% for room in rooms %}
+                <tr>
+                    <td class="room-number">{{ room.room_number }}</td>
+                    <td>{{ room.room_type }}</td>
+                    <td>{{ room.size|floatformat:0 }} ตร.ม</td>
+                    <td>{{ room.rent_price|floatformat:0|intcomma }} บาท</td>
+
+                    <td>
+                        {% if room.id in room_members %}
+                            <span class="status-occupied">❌ ไม่ว่าง</span>
+                        {% else %}
+                            {% if room.status == "available" %}
+                                <span class="status-available">✅ ว่าง</span>
+                            {% elif room.status == "reserved" %}
+                                <span class="status-reserved">🔶 ติดจอง</span>
+                            {% else %}
+                                <span class="status-occupied">❌ ไม่ว่าง</span>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+
+                    <td class="tenant-info">
+                        {% if room.id in room_members %}
+                            <span class="tenant-name">{{ room_members|dict_get:room.id|attr:"fullname" }}</span><br>
+                            <span class="tenant-email">{{ room_members|dict_get:room.id|attr:"email" }}</span>
+                        {% else %}
+                            <span class="no-tenant">ไม่มีผู้เช่า</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <div class="actions-container">
+                            {% if room.id in room_members %}
+                                <a href="{% url 'remove_member' room.id %}" class="btn delete-tenant-btn"
+                                   onclick="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบผู้เช่าออกจากห้องนี้?');">
+                                   ลบผู้เช่า
+                                </a>
+                            {% else %}
+                                <form method="POST" action="{% url 'update_member' room.id %}" class="update-member-form">
+                                    {% csrf_token %}
+                                    <select name="member_id" class="tenant-select" required>
+                                        <option value="" disabled selected>เลือกผู้เช่า</option>
+                                        {% for member in members %}
+                                            <option value="{{ member.id }}">{{ member.fullname }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn add-tenant-btn">เพิ่มผู้เช่า</button>
+                                </form>
+                            {% endif %}
+
+                            <a href="{% url 'delete_room' room.id %}" class="btn delete-room-btn"
+                               onclick="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบห้องนี้?');">
+                               ลบห้อง
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="no-room">ไม่มีห้องในระบบ</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- JavaScript ค้นหา -->
+    <script>
+        document.getElementById("searchInput").addEventListener("keyup", function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#roomTableBody tr");
+
+            rows.forEach(row => {
+                let roomNumber = row.querySelector(".room-number")?.textContent.toLowerCase() || "";
+                let tenantName = row.querySelector(".tenant-name")?.textContent.toLowerCase() || "";
+                let tenantEmail = row.querySelector(".tenant-email")?.textContent.toLowerCase() || "";
+
+                if (roomNumber.includes(filter) || tenantName.includes(filter) || tenantEmail.includes(filter)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+    </script>
+</div>
+{% endblock %}

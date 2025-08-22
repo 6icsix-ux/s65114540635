@@ -1,0 +1,59 @@
+/* ✅ Container หลัก */
+.electricity-usage-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+/* ✅ หัวข้อ */
+.electricity-usage-container h2 {
+    font-size: 22px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+/* ✅ ตารางมิเตอร์ */
+.electricity-usage-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.electricity-usage-table th {
+    background-color: #2c3e50;
+    color: white;
+    padding: 12px;
+    text-align: center;
+}
+
+.electricity-usage-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+/* ✅ ปุ่มย้อนกลับ */
+.btn-back {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 15px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.btn-back:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}

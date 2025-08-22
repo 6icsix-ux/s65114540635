@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Admin Manage Users{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/adminpage.css' %}">
+
+<div class="content-header">
+    <h2>👥 จัดการผู้ใช้งาน</h2>
+</div>
+
+<div class="stats-container">
+    <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info">
+            <h3>จำนวนผู้ใช้ทั้งหมด</h3>
+            <p>{{ users|length }}</p>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">👑</div>
+        <div class="stat-info">
+            <h3>ผู้ดูแลระบบ</h3>
+            <p>{{ admins_count }}</p>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">👤</div>
+        <div class="stat-info">
+            <h3>ผู้ใช้ทั่วไป</h3>
+            <p>{{ users_count }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="search-container">
+    <input type="text" id="searchInput" class="search-input" placeholder="🔍 ค้นหา ชื่อผู้ใช้ หรืออีเมล...">
+</div>
+
+<div class="table-container">
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>ชื่อ-นามสกุล</th>
+                <th>อีเมล</th>
+                <th>เบอร์โทรศัพท์</th>
+                <th>สถานะ</th>
+                <th>จัดการ</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody">
+            {% for user in users %}
+            <tr>
+                <td>
+                    <a href="#" class="profile-link user-name" data-id="{{ user.id }}">
+                      {{ user.fullname }}
+                    </a>
+                  </td>
+                  <td>
+                    <a href="#" class="profile-link user-email" data-id="{{ user.id }}">
+                      {{ user.email }}
+                    </a>
+                  </td>
+                <td>{{ user.phone }}</td>
+                <td>
+                    <span class="role-badge {{ user.role }}">
+                        {{ user.role|title }}
+                    </span>
+                </td>
+                <td class="action-buttons">
+                    {% if user.role != 'admin' %}
+                        <a href="{% url 'change_user_role' user.id 'admin' %}" class="btn make-admin">แก้ไขเป็นผู้ดูแล</a>
+                    {% endif %}
+                    {% if user.role != 'user' %}
+                        <a href="{% url 'change_user_role' user.id 'user' %}" class="btn make-user">แก้ไขเป็นผู้ใช้</a>
+                    {% endif %}
+                    <a href="{% url 'delete_user' user.id %}" class="btn delete-user"
+                       onclick="return confirm('คุณแน่ใจหรือไม่?')">ลบ</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- 🔹 Profile Modal -->
+<div id="profileModal" class="modal">
+    <div class="modal-inner">
+      <span class="close" onclick="closeProfileModal()">&times;</span>
+      <img id="profileImg" class="modal-img" src="" alt="profile">
+      <h2 id="profileName">ชื่อ</h2>
+      <p><strong>อีเมล:</strong> <span id="profileEmail"></span></p>
+      <p><strong>เบอร์โทร:</strong> <span id="profilePhone"></span></p>
+      <p><strong>ที่อยู่:</strong> <span id="profileAddress"></span></p>
+      <p><strong>เพศ:</strong> <span id="profileSex"></span></p>
+      <p><strong>วันเกิด:</strong> <span id="profileBirthday"></span></p>
+      <p><strong>สถานะ:</strong> <span id="profileRole"></span></p>
+      <button class="modal-close-btn" onclick="closeProfileModal()">ปิด</button>
+    </div>
+  </div>
+  
+
+<!-- 🔹 JavaScript -->
+<script>
+    // 🔍 ค้นหาแบบ real-time
+    document.getElementById("searchInput").addEventListener("keyup", function () {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#userTableBody tr");
+
+        rows.forEach(row => {
+            let name = row.querySelector(".profile-link")?.textContent.toLowerCase() || "";
+            let email = row.querySelectorAll(".profile-link")[1]?.textContent.toLowerCase() || "";
+            row.style.display = (name.includes(filter) || email.includes(filter)) ? "" : "none";
+        });
+    });
+
+    // 🔐 ปิด modal โปรไฟล์
+    function closeProfileModal() {
+        document.getElementById("profileModal").style.display = "none";
+    }
+
+    // 🔄 โหลดข้อมูลโปรไฟล์ด้วย AJAX
+    document.querySelectorAll(".profile-link").forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const userId = this.dataset.id;
+
+            fetch(`/menege/get-user-profile/${userId}/`)
+                .then(response => {
+                    if (!response.ok) throw new Error("ไม่สามารถโหลดข้อมูลผู้ใช้");
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById("profileImg").src = data.profile;
+                    document.getElementById("profileName").textContent = data.fullname;
+                    document.getElementById("profileEmail").textContent = data.email;
+                    document.getElementById("profilePhone").textContent = data.phone;
+                    document.getElementById("profileAddress").textContent = data.address;
+                    document.getElementById("profileSex").textContent = data.sex;
+                    document.getElementById("profileBirthday").textContent = data.birthday;
+
+                    const roleMap = {
+                        "admin": "👑 ผู้ดูแลระบบ",
+                        "user": "👤 ผู้ใช้งานทั่วไป"
+                    };
+                    document.getElementById("profileRole").textContent = roleMap[data.role] || data.role;
+
+                    document.getElementById("profileModal").style.display = "flex";
+                })
+                .catch(err => {
+                    alert("เกิดข้อผิดพลาดในการโหลดข้อมูล");
+                    console.error(err);
+                });
+        });
+    });
+</script>
+
+{% endblock %}

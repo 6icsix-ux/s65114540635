@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/admin_manage_news.css' %}">
+</head>
+<div class="news-container">
+    <h2>🚨 จัดการข่าวประชาสัมพันธ์</h2>
+
+    <!-- ✅ ปุ่มเพิ่มข่าว -->
+    <a href="{% url 'admin_add_news' %}" class="btn btn-add-news">➕ เพิ่มข่าวใหม่</a>
+
+    <!-- ✅ รายการข่าว -->
+    {% for news in news_list %}
+    <div class="news-card">
+        {% if news.image %}
+            <img src="{{ news.image.url }}" alt="News Image">
+        {% endif %}
+        <h3>{{ news.title }}</h3>
+        <p>{{ news.content }}</p>
+        <small>{{ news.created_at }}</small>
+    
+        <!-- ✅ ปุ่มแก้ไขและลบ -->
+        <div class="button-container">
+            <a href="{% url 'admin_edit_news' news.id %}" class="btn btn-edit">✏️ แก้ไข</a>
+            <a href="{% url 'delete_news' news.id %}" class="btn btn-delete" 
+   onclick="return confirm('คุณต้องการลบข่าวนี้หรือไม่?')">❌ ลบ</a>
+
+        </div>
+    </div>
+    
+    {% empty %}
+        <p class="no-news">❌ ไม่มีข่าวประชาสัมพันธ์</p>
+    {% endfor %}
+</div>
+{% endblock %}

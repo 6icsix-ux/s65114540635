@@ -1,0 +1,113 @@
+/* ✅ ปรับแต่ง container */
+.complaint-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* ✅ ปรับแต่งหัวข้อ */
+.complaint-container h2 {
+    color: #2a52be;
+    font-size: 26px;
+    margin-bottom: 15px;
+}
+
+/* ✅ ฟอร์ม */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ✅ ปรับแต่ง input */
+select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    background: #f8f8f8;
+}
+
+/* ✅ เอฟเฟกต์เมื่อโฟกัส */
+select:focus, textarea:focus {
+    border-color: #2a52be;
+    outline: none;
+    box-shadow: 0 0 5px rgba(42, 82, 190, 0.5);
+}
+
+/* ✅ ปุ่ม */
+.btn {
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-submit {
+    background: #2a52be;
+    color: white;
+    border: none;
+}
+
+.btn-submit:hover {
+    background: #1d3b8f;
+}
+
+.btn-back {
+    background: #ccc;
+    color: black;
+}
+
+.btn-back:hover {
+    background: #999;
+}
+
+/* ✅ ปรับแต่งการแจ้งเตือน */
+.notification-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.notification-section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.notification-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.notification-section li {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.notification-section li.unread {
+    font-weight: bold;
+    color: red;
+}
+
+.readonly-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    color: #555;
+    cursor: not-allowed;
+    font-size: 16px;
+}

@@ -1,0 +1,104 @@
+/* ✅ ปรับแต่ง Container */
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+/* ✅ หัวข้อ */
+h2 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+/* ✅ หมายเลขห้อง */
+.room-number {
+    font-size: 22px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* ✅ กรอบข้อมูลห้อง */
+.room-container {
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+/* ✅ ภาพห้อง */
+.room-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 15px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ หมายเลขห้อง */
+.room-number {
+    font-size: 22px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.no-room {
+    color: red;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+/* ✅ รายละเอียดห้อง */
+.room-details {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.room-details p {
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+/* ✅ ข้อความไม่มีห้อง */
+.no-room {
+    font-size: 18px;
+    color: red;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+/* ✅ สิ่งอำนวยความสะดวก */
+.modal-amenities {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.amenity-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.amenity-badge {
+    background: #f0f0f0;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+}

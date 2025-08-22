@@ -1,0 +1,30 @@
+{% extends 'baseuser.html' %}
+{% load static %}
+{% block content %}
+
+<div class="notification-container">
+    <h2>🔔 ศูนย์แจ้งเตือน</h2>
+
+    {% if notifications %}
+        <form method="POST" action="{% url 'mark_notifications_as_read' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-mark-read">✅ ทำเครื่องหมายว่าอ่านแล้ว</button>
+        </form>
+
+        <ul class="notification-list">
+            {% for notification in notifications %}
+                <li class="notification-item {% if not notification.is_read %}unread{% else %}read{% endif %}">
+                    {{ notification.message }}
+                    <br>
+                    <small class="text-muted">({{ notification.created_at|date:"d/m/Y H:i" }})</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>😢 ไม่มีการแจ้งเตือน</p>
+    {% endif %}
+</div>
+
+<link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+
+{% endblock %}

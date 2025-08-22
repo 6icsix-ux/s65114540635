@@ -1,0 +1,19 @@
+{% extends 'baseuser.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <title>ได้รับการชำระเงินแล้ว</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/payment_success.css' %}">
+</head>
+<body>
+    <div class="payment-success-container">
+        <div class="message-box">
+            <h1>อัพโหลดสลิปสำเร็จ !</h1>
+            <p>การชำระเงินอยู่ในระหว่างการดำเนินการ กรุณารอสักครู่ . . . </p>
+            <a href="{% url 'home' %}" class="btn">กลับไปที่หน้าห้องพัก</a>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

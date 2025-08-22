@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}Admin Home{% endblock %}
+{% block content %}
+
+
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/admin_home.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<div class="admin-dashboard">
+    <h2>Dashboard</h2>
+
+    <!-- ✅ การ์ดข้อมูลสรุป -->
+    <div class="summary-cards">
+        <div class="card blue">
+            <h3>ค่าเช่ารายเดือน</h3>
+            <p>{{ total_monthly_rent|floatformat:0|intcomma }} บาท</p>
+        </div>
+
+        <div class="card green">
+            <h3>จำนวนสมาชิก</h3>
+            <p>{{ total_tenants }} คน</p>
+        </div>
+
+        <div class="card red">
+            <h3>จำนวนห้องพัก</h3>
+            <p>{{ total_rooms }} ห้อง</p>
+        </div>
+    </div>
+
+    <!-- ✅ กราฟแสดงรายได้ -->
+    <div class="charts">
+        <div class="chart-container">
+            <h3>รายได้ค่าเช่ารายเดือน</h3>
+            <canvas id="monthlyRevenueChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h3>รายได้แยกตามปี</h3>
+            <canvas id="yearlyRevenueChart"></canvas>
+        </div>
+
+        
+    </div>
+</div>
+<script>
+
+    var ctx = document.getElementById("monthlyRevenueChart").getContext("2d");
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: {{ monthly_labels|safe }},
+            datasets: [{
+                label: "รายได้ (บาท)",
+                data: {{ monthly_data|safe }},
+                backgroundColor: "rgba(54, 162, 235, 0.7)"
+            }]
+        }
+    });
+    var ctx2 = document.getElementById("yearlyRevenueChart").getContext("2d");
+    new Chart(ctx2, {
+        type: "bar",
+        data: {
+            labels: {{ yearly_labels|safe }},
+            datasets: [{
+                label: "รายได้ (บาท)",
+                data: {{ yearly_data|safe }},
+                backgroundColor: "rgba(75, 192, 192, 0.7)"
+            }]
+        }
+    });
+</script>
+{% endblock %}

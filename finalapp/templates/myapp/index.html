@@ -1,0 +1,138 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kim Apartment</title>
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+
+<!-- 🔹 Navbar -->
+<div class="navbar">
+  <div class="logo"><h1>Kim Apartment</h1></div>
+  <div class="auth-buttons">
+    <a href="{% url 'login' %}">เข้าสู่ระบบ</a>
+    <a href="{% url 'register' %}">สมัครสมาชิก</a>
+  </div>
+</div>
+
+<!-- 🔹 Room Cards -->
+<div class="container">
+  <h1>รายการห้องพัก</h1>
+  <div class="room-list">
+    {% for room in rooms %}
+    <div class="room-card">
+      <img src="{{ room.image.url }}" 
+           alt="รูปห้อง {{ room.room_number }}"
+           onclick="openModal(this)"
+           data-src="{{ room.image.url }}"
+           data-room="{{ room.room_number }}"
+           data-type="{{ room.room_type }}"
+           data-size="{{ room.size }}"
+           data-rent="{{ room.rent_price }}"
+           data-elec="{{ room.electricity_price }}"
+           data-water="{{ room.water_price }}"
+           data-status="{{ room.status }}"
+           data-amenities="{{ room.get_facilities_list|join:',' }}">
+      <h2>ห้อง {{ room.room_number }}</h2>
+      <p class="status">
+        สถานะ: 
+        {% if room.status == "available" %}
+          <span class="status-available">✅ ว่าง</span>
+        {% elif room.status == "occupied" %}
+          <span class="status-occupied">❌ ไม่ว่าง</span>
+        {% elif room.status == "reserved" %}
+          <span class="status-reserved">🔶 ติดจอง</span>
+        {% endif %}
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- 🔹 Modal -->
+<div id="roomModal" class="modal">
+  <div class="modal-inner">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img id="modalImage" src="" class="modal-img" />
+
+    <div class="modal-details">
+      <h2>ห้อง <span id="modalRoomNumber"></span> (<span id="modalRoomType"></span>)</h2>
+      <ul>
+        <li><strong>ขนาด </strong> <span id="modalSize"></span> ตร.ม.</li>
+        <li><strong>ค่าเช่า </strong> <span id="modalRent"></span> บาท/เดือน</li>
+        <li><strong>ค่าไฟ </strong> <span id="modalElec"></span> บาท/หน่วย</li>
+        <li><strong>ค่าน้ำ </strong> <span id="modalWater"></span> บาท/หน่วย</li>
+        <li><strong>สถานะ </strong> <span id="modalStatus"></span></li>
+      </ul>
+      <div class="modal-amenities">
+        <strong>สิ่งอำนวยความสะดวก </strong>
+        <div id="modalAmenities" class="amenity-badges"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🔹 Script -->
+<script>
+const FACILITY_MAP = {
+  "bed": "🛏 เตียง",
+  "wifi": "📶 Wi-Fi",
+  "water_heater": "🚿 เครื่องทำน้ำอุ่น",
+  "parking": "🅿️ ที่จอดรถ",
+  "kettle": "☕ กาน้ำร้อน",
+  "kitchen": "🍳 ครัว/ไมโครเวฟ",
+  "balcony": "🌅 ระเบียง",
+  "no_smoking": "🚭 ห้ามสูบบุหรี่",
+  "smoking_area": "🚬 สูบบุหรี่ (ภายนอก)",
+  "pet_allowed": "🐶🐱 สัตว์เลี้ยงเข้าได้",
+  "fridge": "🧊 ตู้เย็น"
+};
+function formatNumber(value) {
+  const num = parseFloat(value);
+  return isNaN(num) ? value : Math.round(num).toLocaleString();
+}
+
+
+function openModal(img) {
+  document.getElementById("modalImage").src = img.dataset.src;
+  document.getElementById("modalRoomNumber").textContent = img.dataset.room;
+  document.getElementById("modalRoomType").textContent = img.dataset.type;
+  document.getElementById("modalSize").textContent = formatNumber(img.dataset.size);
+  document.getElementById("modalRent").textContent = formatNumber(img.dataset.rent);
+  document.getElementById("modalElec").textContent = formatNumber(img.dataset.elec);
+  document.getElementById("modalWater").textContent = formatNumber(img.dataset.water);
+
+
+  const statusMap = {
+    "available": "✅ ว่าง",
+    "occupied": "❌ ไม่ว่าง",
+    "reserved": "🔶 ติดจอง"
+  };
+  document.getElementById("modalStatus").textContent = statusMap[img.dataset.status] || img.dataset.status;
+
+  // แสดงสิ่งอำนวยความสะดวก
+  const amenities = img.dataset.amenities.split(",");
+  const modalAmenityDiv = document.getElementById("modalAmenities");
+  modalAmenityDiv.innerHTML = "";
+
+  amenities.forEach(function(item) {
+    const span = document.createElement("span");
+    span.className = "amenity-badge";
+    span.textContent = FACILITY_MAP[item.trim()] || item.trim();
+    modalAmenityDiv.appendChild(span);
+  });
+
+  document.getElementById("roomModal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("roomModal").style.display = "none";
+}
+</script>
+
+</body>
+</html>

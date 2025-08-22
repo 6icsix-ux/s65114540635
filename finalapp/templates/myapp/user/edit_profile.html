@@ -1,0 +1,77 @@
+{% extends 'baseuser.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <title>แก้ไขข้อมูลส่วนตัว</title>
+    <link rel="stylesheet" href="{% static 'css/editprofile.css' %}">
+</head>
+<body>
+    <div class="profile-container">
+        <h2>🛠 แก้ไขข้อมูลส่วนตัว</h2>
+
+        <form method="POST" enctype="multipart/form-data" class="profile-form">
+            {% csrf_token %}
+
+            <!-- ✅ รูปโปรไฟล์ -->
+            <div class="profile-section">
+                <label for="profile_picture">📷 รูปโปรไฟล์</label>
+                <div class="profile-preview">
+                    {% if form.instance.profile_picture %}
+                        <img src="{{ form.instance.profile_picture.url }}" alt="โปรไฟล์" class="profile-img-preview">
+                    {% else %}
+                        <img src="{% static 'images/default_profile.png' %}" alt="ไม่มีรูปโปรไฟล์" class="profile-img-preview">
+                    {% endif %}
+                </div>
+                {{ form.profile_picture }}
+            </div>
+
+            <!-- ✅ ข้อมูลส่วนตัว -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fullname">👤 ชื่อ - นามสกุล</label>
+                    {{ form.fullname }}
+                </div>
+
+                <div class="form-group">
+                    <label for="email">✉️ อีเมล</label>
+                    {{ form.email }}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">📞 เบอร์โทร</label>
+                    {{ form.phone }}
+                </div>
+
+                <div class="form-group">
+                    <label for="address">🏡 ที่อยู่</label>
+                    {{ form.address }}
+                </div>
+            </div>
+
+            <!-- ✅ เพศ & วันเกิด -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="sex">⚤ เพศ</label>
+                    <div class="radio-inline">
+                        {{ form.sex }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="birthday">🎂 วันเกิด</label>
+                    {{ form.birthday }}
+                </div>
+            </div>
+
+            <!-- ✅ ปุ่ม -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-save">💾 บันทึก</button>
+                <a href="{% url 'profile' %}" class="btn btn-back">❌ ยกเลิก</a>
+            </div>
+        </form>
+    </div>
+</body>
+{% endblock %}

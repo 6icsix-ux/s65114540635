@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/admin_add_news.css' %}">
+</head>
+
+<div class="news-form-container">
+    <h2>📝 เพิ่มข่าวใหม่</h2>
+
+    <!-- ฟอร์มเพิ่มข่าว -->
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="title">หัวข้อข่าว :</label>
+        <input type="text" name="title" id="title" required>
+
+        <label for="content">เนื้อหาข่าว :</label>
+        <textarea name="content" id="content" required></textarea>
+
+        <label for="image">อัปโหลดรูปภาพ :</label>
+        <input type="file" name="image" id="image">
+
+        <div class="button-container">
+            <button type="submit" class="btn btn-submit">📰 บันทึกข่าว</button>
+            <a href="{% url 'admin_manage_news' %}" class="btn btn-cancel">❌ ย้อนกลับ</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

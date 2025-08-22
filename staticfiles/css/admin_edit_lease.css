@@ -1,0 +1,46 @@
+/* admin_edit_lease.css */
+
+/* จัดโครงสร้างให้กลางหน้าจอ */
+.lease-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* สไตล์หัวข้อ */
+.lease-title {
+    text-align: center;
+    color: #4CAF50;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* ฟอร์ม */
+.lease-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* เพิ่มระยะห่างระหว่างฟิลด์ฟอร์ม */
+.lease-form .form-group {
+    margin-bottom: 15px;
+}
+
+/* ปุ่มบันทึก */
+.btn-submit {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* ปุ่มเมื่อ Hover */
+.btn-submit:hover {
+    background-color: #0056b3;
+}

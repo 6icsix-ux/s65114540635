@@ -1,0 +1,91 @@
+/* ปรับแต่ง container */
+.upload-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 25px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15); /* เงานุ่มๆ */
+    text-align: center;
+}
+
+/* ปรับแต่งหัวข้อ */
+.upload-container h2 {
+    color: #333;
+    font-size: 26px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* ปรับแต่ง label */
+.form-group label {
+    display: block;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* ปรับแต่ง input และ select */
+.upload-form select,
+.upload-form input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.3s ease;
+    background-color: #f8f8f8;
+}
+
+/* เอฟเฟกต์เมื่อโฟกัส */
+.upload-form select:focus,
+.upload-form input[type="file"]:focus {
+    border-color: #666;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* ปรับแต่งปุ่ม */
+.upload-button {
+    background: #4CAF50;
+    color: white;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    width: 100%;
+}
+
+.upload-button:hover {
+    background: #45a049;
+}
+
+/* ปรับระยะห่างให้ดูสวยขึ้น */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* ปรับขนาดไอคอน */
+.upload-container i {
+    margin-right: 5px;
+    color: #4CAF50;
+    font-size: 20px;
+}
+
+/* ปรับแต่ง responsive สำหรับหน้าจอเล็ก */
+@media (max-width: 600px) {
+    .upload-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .upload-button {
+        font-size: 16px;
+        padding: 12px;
+    }
+}

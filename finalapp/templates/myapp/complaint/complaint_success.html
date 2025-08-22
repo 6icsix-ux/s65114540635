@@ -1,0 +1,16 @@
+{% extends 'baseuser.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <title>การร้องเรียนสำเร็จ</title>
+    <link rel="stylesheet" href="{% static 'css/complaint_success.css' %}">
+</head>
+<body>
+    <div class="complaint-success-container">
+        <h2>การร้องเรียนถูกส่งเรียบร้อยแล้ว !</h2>
+        <p>กรุณารอการตอบกลับจากผู้ดูแล. . . </p>
+    </div>
+</body>
+</html>
+{% endblock %}

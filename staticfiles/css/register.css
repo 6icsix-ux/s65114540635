@@ -1,0 +1,139 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F0F0F0;
+    font-family: Arial, sans-serif;
+}
+
+/* จัด Container หลัก */
+.register-container {
+    width: 350px; /* ความกว้างของฟอร์ม */
+    margin: 50px auto; /* จัดตรงกลาง */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; /* จัดข้อความกึ่งกลาง */
+}
+
+/* จัด Label และ Input ให้อยู่เป็นระเบียบ */
+form div {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block; /* ทำให้ Label อยู่คนละบรรทัด */
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* ป้องกัน input เกินขอบ */
+}
+
+/* ปุ่มสมัครสมาชิก */
+.btn-register {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    color: white;
+    background-color: #4c45e5;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-register:hover {
+    background-color: #3938c7;
+}
+
+/* ข้อความลิงก์ด้านล่าง */
+.link-login {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.link-login a {
+    color: #4c45e5;
+    text-decoration: none;
+}
+
+.link-login a:hover {
+    text-decoration: underline;
+}
+
+/* ข้อความลิงก์ด้านล่าง */
+.admin-register {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.admin-register  a {
+    color: #4c45e5;
+    text-decoration: none;
+}
+
+.admin-register  a:hover {
+    text-decoration: underline;
+}
+
+
+/* Popup overlay */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Popup box */
+.popup {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup p {
+    margin-bottom: 15px;
+}
+
+.popup button {
+    background-color: #4c45e5;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.popup button:hover {
+    background-color: #3938c7;
+}
+
+.btn-back {
+    background-color: #6c757d;
+}
+
+.btn-back:hover {
+    background-color: #5a6268;
+}

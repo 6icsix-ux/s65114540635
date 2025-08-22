@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load custom_filters %}
+{% block title %}Admin Payment{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/admin_payments.css' %}">
+
+<div class="container">
+    <div class="header-container">
+        <h2>📋 รายการชำระเงิน</h2>
+        <div class="filter-container">
+            <label for="statusFilter">แสดงสถานะ</label>
+            <select id="statusFilter" class="status-dropdown">
+                <option value="all">ทั้งหมด</option>
+                <option value="pending">รอดำเนินการ</option>
+                <option value="approved">อนุมัติแล้ว</option>
+                <option value="rejected">ไม่อนุมัติ</option>
+            </select>
+        </div>
+    </div>
+    
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ห้อง</th>
+                    <th>ผู้เช่า</th>
+                    <th>จำนวนเงิน</th>
+                    <th>เดือนปี</th> <!-- ✅ เพิ่มตรงนี้ -->
+                    <th>สถานะ</th>
+                    <th>สลิป</th>
+                    <th>การอนุมัติ</th>
+                </tr>
+            </thead>            
+            <tbody id="paymentTableBody">
+                {% for payment in payments %}
+                <tr class="payment-row" data-status="{{ payment.status }}">
+                    <td>{{ payment.room.room_number|default:"-" }}</td>
+                    <td>{{ payment.member.fullname|default:"-" }}</td>
+                    <td>{{ payment.amount|floatformat:0|intcomma }} บาท</td>
+                    <td>{{ payment.month_year|thai_month_year }}</td> <!-- ✅ เพิ่มตรงนี้ ใช้ฟิลเตอร์ format ภาษาไทย -->
+                    <td>
+                        {% if payment.status == "pending" %}
+                            <span class="status-pending">รอดำเนินการ</span>
+                        {% elif payment.status == "approved" %}
+                            <span class="status-approved">✔ อนุมัติแล้ว</span>
+                        {% elif payment.status == "rejected" %}
+                            <span class="status-rejected">❌ ไม่อนุมัติ</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if payment.slip %}
+                            <img src="{{ payment.slip.url }}" alt="สลิป" class="payment-slip" onclick="openModal('{{ payment.slip.url }}')">
+                        {% else %}
+                            ไม่มีสลิป
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if payment.status == "pending" %}
+                            <a href="{% url 'approve-payment' payment.id %}" class="btn-success" onclick="return confirm('ยืนยันการอนุมัติการชำระเงินนี้?')">✅ อนุมัติ</a>
+                            <a href="{% url 'reject-payment' payment.id %}" class="btn-danger" onclick="return confirm('ยืนยันการปฏิเสธการชำระเงินนี้?')">❌ ไม่อนุมัติ</a>
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="7" class="no-data">ไม่มีรายการชำระเงิน</td></tr> <!-- ✅ แก้ colspan จาก 6 เป็น 7 ด้วย -->
+                {% endfor %}
+            </tbody>
+            
+        </table>
+    </div>
+</div>
+
+<!-- ✅ JavaScript กรองสถานะ -->
+<script>
+    document.getElementById("statusFilter").addEventListener("change", function () {
+        let filter = this.value;
+        console.log("เลือกสถานะ:", filter);
+        let rows = document.querySelectorAll(".payment-row");
+
+        rows.forEach(row => {
+            let status = row.getAttribute("data-status");
+            row.style.display = (filter === "all" || status === filter) ? "" : "none";
+        });
+    });
+
+    function openModal(imageUrl) {
+        let modal = document.createElement("div");
+        modal.classList.add("modal-overlay");
+
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal" onclick="document.body.removeChild(this.parentElement.parentElement)">✖</span>
+                <img class="modal-image" src="${imageUrl}">
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+    }
+</script>
+
+{% endblock %}

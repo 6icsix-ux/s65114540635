@@ -1,0 +1,220 @@
+/* admin_payments.css - ปรับแต่งสไตล์ใหม่ให้ดูโมเดิร์นและเป็นระเบียบมากขึ้น */
+
+/* ปรับโครงสร้าง Layout */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+/* ปรับแต่งหัวข้อ */
+.header-container {
+    display: flex;
+    justify-content: space-between;  /* ✅ แยกหัวข้อกับ dropdown ออกจากกัน */
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* ปรับแต่งตาราง */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* ✅ ทำให้ตารางไม่ล้นกรอบ */
+.table-container {
+    width: 100%;
+    overflow-x: auto;  /* ✅ เพิ่ม Scroll แนวนอน ถ้าตารางล้น */
+    border-radius: 10px;
+    background: white;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ ปรับตารางให้ Responsive */
+table {
+    width: 100%;
+    max-width: 100%;  /* ✅ ป้องกันตารางล้น */
+    border-collapse: collapse;
+}
+
+/* ✅ ส่วนหัวของตาราง */
+th {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* ✅ ข้อมูลในตาราง */
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    font-size: 14px;
+    white-space: nowrap;  /* ✅ ป้องกันข้อความแตกบรรทัด */
+}
+
+/* ✅ ทำให้รูปสลิปไม่ใหญ่เกินไป */
+.payment-slip {
+    max-width: 100px;
+    border-radius: 8px;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.payment-slip:hover {
+    transform: scale(1.2);
+}
+
+
+/* สลับสีแถวให้ดูอ่านง่าย */
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* ปรับแต่งปุ่ม */
+.btn-success, .btn-danger {
+    display: inline-block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-success {
+    background-color: #28a745;
+    box-shadow: 0 3px 6px rgba(40, 167, 69, 0.3);
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.5);
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    box-shadow: 0 3px 6px rgba(220, 53, 69, 0.3);
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.5);
+}
+
+/* ปรับขนาดรูปสลิป */
+.payment-slip {
+    max-width: 100px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+.payment-slip:hover {
+    transform: scale(1.2);
+}
+
+/* ปรับแต่งสถานะการชำระเงิน */
+.status-pending {
+    color: orange;
+    font-weight: bold;
+}
+
+.status-approved {
+    color: green;
+    font-weight: bold;
+}
+
+.status-rejected {
+    color: red;
+    font-weight: bold;
+}
+
+/* ✅ ปรับสไตล์ Dropdown การเลือกสถานะ */
+.status-dropdown {
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.status-dropdown:hover {
+    border-color: #007bff;
+}
+
+/* ✅ ปรับสไตล์ของ Dropdown ค้นหา */
+.filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-container label {
+    font-weight: bold;
+}
+
+.header-container label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* ✅ ปรับแต่งพื้นหลังของ Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* ✅ ปรับขนาดและขอบของรูป */
+.modal-content {
+    position: relative;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-image {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 10px;
+}
+
+/* ✅ ปุ่มปิด Modal */
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    color: red;
+}
+
+.close-modal:hover {
+    color: darkred;
+}
+
+

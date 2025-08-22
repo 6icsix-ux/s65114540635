@@ -1,0 +1,64 @@
+.news-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* ✅ ปุ่มย้อนกลับ */
+.btn-back {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #555;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.btn-back:hover {
+    background: #333;
+}
+
+/* ✅ ส่วนแจ้งเตือน */
+.notification-section {
+    background: #f0f0f0;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.notification-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.notification-section li {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.notification-section li.unread {
+    font-weight: bold;
+    color: red;
+}
+
+/* ✅ กล่องข่าว */
+.news-card {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: #f9f9f9;
+    text-align: left;
+}
+
+.news-card img {
+    max-width: 100%;
+    border-radius: 8px;
+}

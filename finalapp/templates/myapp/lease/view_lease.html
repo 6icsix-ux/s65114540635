@@ -1,0 +1,16 @@
+{% extends "baseuser.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/view_lease.css' %}">
+    <div class="container">
+        <h2>ข้อมูลสัญญาเช่าของคุณ</h2>
+
+        {% if lease %}
+            <p>ชื่อผู้เช่า {{ member.fullname }}</p>
+            <p>ไฟล์สัญญาเช่า <a href="{{ lease.file.url }}" target="_blank">ดูสัญญา</a></p>
+            <p>วันที่ทำสัญญา {{ lease.created_at }}</p>
+        {% else %}
+            <p>⚠️ คุณยังไม่มีสัญญาเช่าในระบบ</p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,79 @@
+/* ✅ ตั้งค่าหน้าหลักของฟอร์ม */
+.news-form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* ✅ หัวข้อ */
+h2 {
+    color: #4A148C;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+/* ✅ ฟอร์ม */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+/* ✅ ปุ่ม */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.btn {
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn-submit {
+    background: #4CAF50;
+    color: white;
+}
+
+.btn-cancel {
+    background: #D32F2F;
+    color: white;
+}
+
+.btn-submit:hover {
+    background: #388E3C;
+}
+
+.btn-cancel:hover {
+    background: #B71C1C;
+}

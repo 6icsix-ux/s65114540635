@@ -1,0 +1,7 @@
+Django>=4.0
+djangorestframework
+Pillow
+python-decouple
+psycopg2-binary
+whitenoise
+gunicorn

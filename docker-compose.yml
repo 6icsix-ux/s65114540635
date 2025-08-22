@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "20635:5432"  # External:Internal (โจทย์ 2XXXX → 20635)
+
+  web:
+    build: .
+    command: >
+      sh -c "
+        echo 'Waiting for db...' &&
+        while ! nc -z db 5432; do sleep 1; done &&
+        echo 'DB is up!' &&
+        python manage.py migrate &&
+        gunicorn --bind 0.0.0.0:8000 finalpj.wsgi:application
+      "
+    volumes:
+      - .:/app
+    ports:
+      - "10635:8000"   # โจทย์ 1XXXX → 10635
+    depends_on:
+      - db
+    env_file:
+      - .env
+    restart: always
+
+volumes:
+  postgres_data:

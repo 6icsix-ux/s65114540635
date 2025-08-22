@@ -1,0 +1,94 @@
+{% extends 'baseuser.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<head>
+    <title>ตรวจสอบค่าใช้จ่ายรายเดือน</title>
+    <link rel="stylesheet" href="{% static 'css/rent_check.css' %}">
+</head>
+
+<body>
+    <div class="rent-check-container">
+        <h2>💰 ค่าใช้จ่ายรายเดือน</h2>
+
+        {% if room_not_found %}
+            <p class="error-message">⚠️ คุณยังไม่มีห้องพักที่ลงทะเบียน ⚠️</p>
+        {% else %}
+            <div class="room-details">
+                <h3>🏠 ห้องของคุณ : <strong>{{ user_room.room_number }} ({{ user_room.room_type }})</strong></h3>
+
+                <!-- ✅ เลือกเดือน -->
+                <form method="GET" action="">
+                    <label for="month">📅 เดือน :</label>
+                    <select name="month" id="month" onchange="this.form.submit()">
+                        {% for month in available_months %}
+                            <option value="{{ month }}" {% if month == selected_month %}selected{% endif %}>
+                                {{ month }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+
+                {% if selected_usage %}
+                    <div class="cost-summary">
+                        <div class="cost-item rent">
+                            <p>💰 ค่าเช่า :</p>
+                            <strong>{{ rent_price|floatformat:0|intcomma }} บาท</strong>
+                        </div>
+                        <div class="cost-item electricity">
+                            <p>⚡ ค่าไฟ :</p>
+                            <strong>{{ selected_usage.consumption|floatformat:0|intcomma }} หน่วย</strong> × 
+                            <strong>{{ user_room.electricity_price|floatformat:0|intcomma }} บาท/หน่วย</strong> =
+                            <strong>{{ electricity_cost|floatformat:0|intcomma }} บาท</strong>
+                        </div>
+                        <div class="cost-item water">
+                            <p>💧 ค่าน้ำ :</p>
+                            <strong>{{ water_price|floatformat:0|intcomma }} บาท</strong>
+                        </div>
+                        <div class="cost-item total">
+                            <h3>💵 รวมทั้งหมด :</h3>
+                            <span class="total-cost">{{ total_cost|floatformat:0|intcomma }} บาท/เดือน</span>
+                        </div>
+                    </div>
+
+                    <!-- ✅ แสดงสถานะการชำระเงิน -->
+                    <div class="payment-status">
+                        {% if payment %}
+                            {% if payment.status == "approved" %}
+                                <p class="success-message">✅ สถานะ: <strong>ชำระแล้ว</strong></p>
+
+                                {% if payment.slip %}
+                                    <div class="slip-container">
+                                        <h3>📄 หลักฐานการชำระเงิน</h3>
+                                        <img src="{{ payment.slip.url }}" alt="สลิปการโอนเงิน" class="payment-slip">
+                                    </div>
+                                {% endif %}
+                                
+                            {% elif payment.status == "pending" %}
+                                <p class="warning-message">⌛ สถานะ: <strong>กำลังตรวจสอบ</strong></p>
+                            {% elif payment.status == "rejected" %}
+                                <p class="error-message">❌ สถานะ: <strong>ไม่อนุมัติ</strong></p>
+                            {% else %}
+                                <p class="error-message">❌ สถานะ: <strong>ยังไม่ชำระ</strong></p>
+                            {% endif %}
+                        {% else %}
+                            <p class="error-message">❌ สถานะ: <strong>ยังไม่ชำระ</strong></p>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p class="warning-message">⚠️ ไม่มีข้อมูลค่าไฟสำหรับเดือนนี้ ⚠️</p>
+                {% endif %}
+            </div>
+        {% endif %}
+        
+        <div class="button-container">
+            {% if not payment or payment.status != "approved" %}
+                <a href="{% url 'payment' %}?month={{ selected_month }}" class="btn btn-pay">💸 แจ้งชำระเงิน</a>
+            {% endif %}
+        </div>
+        
+    </div>
+</body>
+
+{% endblock %}
