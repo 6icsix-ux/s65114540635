@@ -26,4 +26,4 @@ COPY . .
 RUN python manage.py collectstatic --noinput
 
 # Run gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "finalpj.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:10635", "finalpj.wsgi:application"]
