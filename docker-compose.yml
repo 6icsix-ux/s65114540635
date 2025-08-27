@@ -10,8 +10,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "20635:20635"  # External:Internal (โจทย์ 2XXXX → 20635)
+
 
   web:
     build: .
