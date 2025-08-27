@@ -11,7 +11,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "20635:5432"  # External:Internal (โจทย์ 2XXXX → 20635)
+      - "20635:20635"  # External:Internal (โจทย์ 2XXXX → 20635)
 
   web:
     build: .
@@ -26,7 +26,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - "10635:8000"   # โจทย์ 1XXXX → 10635
+      - "10635:10635"   # โจทย์ 1XXXX → 10635
     depends_on:
       - db
     env_file:
