@@ -25,7 +25,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - "10635:10635"   # โจทย์ 1XXXX → 10635
+      - "${EXTERNAL_WEB_PORT}:10635"   # โจทย์ 1XXXX → 10635
     depends_on:
       - db
     env_file:
