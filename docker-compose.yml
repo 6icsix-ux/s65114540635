@@ -1,6 +1,20 @@
 version: '3.9'
 
 services:
+  traefik:
+    image: traefik:v3.1
+    command:
+      - "--api.insecure=true"         # 👈 เปิด dashboard แบบไม่ secure (สำหรับ dev เท่านั้น)
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"   # Traefik dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/acme.json:/letsencrypt/acme.json
+
   db:
     image: postgres:16
     restart: always
@@ -10,7 +24,6 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
 
   web:
     build: .
@@ -24,13 +37,18 @@ services:
       "
     volumes:
       - .:/app
-    ports:
-      - "${EXTERNAL_WEB_PORT}:10635"   # โจทย์ 1XXXX → 10635
     depends_on:
       - db
     env_file:
       - .env
     restart: always
+    ports:
+      - "${EXTERNAL_WEB_PORT}:10635"    # ✅ expose ออกมาให้เข้าตรงได้ด้วย
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.django.rule=Host(`example.com`)"  # 🔁 เปลี่ยน domain จริง
+      - "traefik.http.routers.django.entrypoints=web"
+      - "traefik.http.services.django.loadbalancer.server.port=10635"
 
 volumes:
   postgres_data:
