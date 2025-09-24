@@ -56,7 +56,7 @@ def login_view(request):
             member = Member.objects.get(user=user)
 
             if member.role == 'admin':
-                return redirect('/manage/home/') 
+                return redirect('admin_home') 
             else:
                 return redirect('home')  
 

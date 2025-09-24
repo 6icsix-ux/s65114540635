@@ -32,7 +32,7 @@
                     <div class="button-number">3</div>
                     <span>ตรวจสอบค่าเช่า</span>
                 </a>
-                <a href="/electricity-usage/" class="{% if request.path == 'electricity-usage_url' %}active{% endif %}">
+                <a href="{% url 'electricity_usage' %}" class="{% if request.resolver_match.url_name == 'electricity_usage' %}active{% endif %}">
                     <div class="button-number">4</div>
                     <span>เลขมิเตอร์</span>
                 </a>

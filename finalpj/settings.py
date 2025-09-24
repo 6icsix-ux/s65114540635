@@ -19,6 +19,9 @@ CSRF_TRUSTED_ORIGINS = [
     *(f"https://{h}" for h in ALLOWED_HOSTS if h not in ("*", "localhost", "127.0.0.1")),
 ]
 
+# --- Reverse Proxy settings ---
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "http")
 
 # --- Apps ---
 INSTALLED_APPS = [
@@ -30,15 +33,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "finalapp",                # <- แอปหลัก
     "django.contrib.humanize",
-    "rest_framework",          # API framework
-    # "corsheaders",           # (ถ้าใช้ frontend แยก, เปิดใช้ได้)
+    "rest_framework",
 ]
 
 # --- Middleware ---
 MIDDLEWARE = [
-    # "corsheaders.middleware.CorsMiddleware",  # ถ้าเปิดใช้ CORS
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",   # serve static files
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -53,7 +54,7 @@ ROOT_URLCONF = "finalpj.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],  # หรือจะไม่ใส่ถ้าใช้ใน app
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -61,7 +62,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "finalapp.context_processors.user_member",  # ถ้ามีใช้
+                "finalapp.context_processors.user_member",
             ],
         },
     },
@@ -69,14 +70,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "finalpj.wsgi.application"
 
-# --- Database (PostgreSQL) ---
+# --- Database ---
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": config("DB_NAME"),
         "USER": config("DB_USER"),
         "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST", default="db"),  # Docker service name
+        "HOST": config("DB_HOST", default="db"),
         "PORT": config("DB_PORT", default="5432"),
         "CONN_MAX_AGE": 60,
     }
@@ -97,11 +98,13 @@ USE_I18N = True
 USE_TZ = True
 
 # --- Static / Media ---
-STATIC_URL = "/static/"
+FORCE_SCRIPT_NAME = '/s65114540635'
+
+STATIC_URL = FORCE_SCRIPT_NAME + '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
 
-MEDIA_URL = "/media/"
+MEDIA_URL = FORCE_SCRIPT_NAME + '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
@@ -113,16 +116,8 @@ if DEBUG:
     LOGGING = {
         "version": 1,
         "disable_existing_loggers": False,
-        "handlers": {
-            "console": {
-                "class": "logging.StreamHandler"
-            }
-        },
+        "handlers": {"console": {"class": "logging.StreamHandler"}},
         "loggers": {
-            "django.db.backends": {
-                "handlers": ["console"],
-                "level": "INFO",
-            }
-        }
+            "django.db.backends": {"handlers": ["console"], "level": "INFO"},
+        },
     }
-

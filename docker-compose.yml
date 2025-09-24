@@ -4,16 +4,23 @@ services:
   traefik:
     image: traefik:v3.1
     command:
-      - "--api.insecure=true"         # 👈 เปิด dashboard แบบไม่ secure (สำหรับ dev เท่านั้น)
+      - "--api.insecure=true"
       - "--api.dashboard=true"
       - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--providers.file.directory=/etc/traefik/dynamic"
     ports:
       - "80:80"
-      - "8080:8080"   # Traefik dashboard
+      - "443:443"
+      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik/acme.json:/letsencrypt/acme.json
+      - ./tls.yml:/etc/traefik/dynamic/tls.yml:ro
+      - ./local.crt:/etc/traefik/certs/cert.pem:ro
+      - ./local.key:/etc/traefik/certs/key.pem:ro
 
   db:
     image: postgres:16
@@ -37,18 +44,36 @@ services:
       "
     volumes:
       - .:/app
+      - media:/app/media
     depends_on:
       - db
     env_file:
       - .env
     restart: always
-    ports:
-      - "${EXTERNAL_WEB_PORT}:10635"    # ✅ expose ออกมาให้เข้าตรงได้ด้วย
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.django.rule=Host(`example.com`)"  # 🔁 เปลี่ยน domain จริง
+      - "traefik.http.routers.django.rule=Host(`192.168.1.175`) && PathPrefix(`/s65114540635`)"
       - "traefik.http.routers.django.entrypoints=web"
       - "traefik.http.services.django.loadbalancer.server.port=10635"
+      - "traefik.http.routers.django.priority=10"
+      # 🔹 Strip prefix before sending to Django
+      - "traefik.http.middlewares.strip-django.stripprefix.prefixes=/s65114540635"
+      - "traefik.http.routers.django.middlewares=strip-django"
+
+  media:
+    build: ./media-server
+    volumes:
+      - media:/data:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.media.rule=Host(`192.168.1.175`) && PathPrefix(`/s65114540635/media`)"
+      - "traefik.http.routers.media.entrypoints=web"
+      - "traefik.http.routers.media.priority=100"
+      - "traefik.http.services.media.loadbalancer.server.port=8000"
+      # 🔹 Strip prefix for media too
+      - "traefik.http.middlewares.strip-media.stripprefix.prefixes=/s65114540635"
+      - "traefik.http.routers.media.middlewares=strip-media"
 
 volumes:
   postgres_data:
+  media:
