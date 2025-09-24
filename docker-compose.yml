@@ -52,12 +52,12 @@ services:
     restart: always
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.django.rule=Host(`192.168.1.175`) && PathPrefix(`/s65114540635`)"
+      - "traefik.http.routers.django.rule=Host(`10.80.24.21`) && PathPrefix(`/s65114540635`)"
       - "traefik.http.routers.django.entrypoints=web"
       - "traefik.http.services.django.loadbalancer.server.port=10635"
       - "traefik.http.routers.django.priority=10"
       # 🔹 Strip prefix before sending to Django
-      - "traefik.http.middlewares.strip-django.stripprefix.prefixes=/s65114540635"
+      - "traefik.http.middlewares.strip-django.stripprefixregex.regex=/s65114540635(/|$$)"
       - "traefik.http.routers.django.middlewares=strip-django"
 
   media:
@@ -66,12 +66,12 @@ services:
       - media:/data:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.media.rule=Host(`192.168.1.175`) && PathPrefix(`/s65114540635/media`)"
+      - "traefik.http.routers.media.rule=Host(`10.80.24.21`) && PathPrefix(`/s65114540635/media`)"
       - "traefik.http.routers.media.entrypoints=web"
       - "traefik.http.routers.media.priority=100"
       - "traefik.http.services.media.loadbalancer.server.port=8000"
       # 🔹 Strip prefix for media too
-      - "traefik.http.middlewares.strip-media.stripprefix.prefixes=/s65114540635"
+      - "traefik.http.middlewares.strip-media.stripprefixregex.regex=/s65114540635(/|$$)"
       - "traefik.http.routers.media.middlewares=strip-media"
 
 volumes:
